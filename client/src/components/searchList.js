@@ -9,21 +9,22 @@ const SearchList = (props) => {
             height: 400,
             margin: 10,
             display: "inline-block",
-            border: "1px solid black"
+            border: "1px solid black",
+            verticalAlign: "top",
+            padding: "5px"
         },
         img: {
-            width: "45%",
-            height: 200
+            width: "100%",
+            height: "200px"
         }
     }
-    console.log(props.list)
     return props.list.length > 1 ? (
         <div className="container">
             {props.list.map((item, index) => {
                 return (
                     <div key={index} style={cardClass.card}>
                         <img src={item.image} style={cardClass.img} />
-                        <p>{item.name}</p>
+                        <p><b>Name:</b> <small>{item.name}</small></p>
                     </div>
 
                 )

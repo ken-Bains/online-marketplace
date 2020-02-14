@@ -1,34 +1,38 @@
 import React, { useRef, useEffect, useState } from "react";
 import SearchList from "./searchList";
 import API from "../utils/API";
-import axios from "axios";
 
 const Search = () => {
     const inputRef = useRef("");
     const [searchItemsList, setSearchItemsList] = useState([]);
 
-    
+
     function handleFormSubmit(e) {
         e.preventDefault();
         itemSearch(inputRef.current.value);
         inputRef.current.value = "";
     }
 
-    useEffect(() => {
-        // axios.get("http://localhost:3001/api/products?q=iphone").then(results => console.log(results))
-        //api file that will make a axios call to certain path
-        // activities/20-Ins_Store/src/utils/GlobalState.js
-        // /Users/ken/Desktop/class/my-class-repo/20-MERN/activities/04-Stu_AJAXFormDelete/Solved/basic/client/src/pages/Books/Books.js
-        // activities/04-Stu_AJAXFormDelete/Solved/basic/client/src/utils/API.js
-        // itemSearch("iphone")
-        searchItemsList.length > 0 ? console.log("items") : itemSearch("")
-
-    }, [searchItemsList])
-
     function itemSearch(item) {
-        API.searchItem(item).then((res)=> setSearchItemsList(res.data));
+        API.searchItem(item).then((res) => {
+            setSearchItemsList(res.data)
+            console.log(res.data);
+        });
     }
 
+    function buttonClick(num) {
+        API.searchCategories(num).then((res) => {
+            setSearchItemsList(res.data)
+            console.log(res.data);
+        });
+    }
+
+    useEffect(() => {
+        if (searchItemsList.length === 0) {
+            itemSearch("")
+        }
+
+    }, [searchItemsList])
     return (
         <div>
             <div className="jumbotron">
@@ -38,8 +42,16 @@ const Search = () => {
                     </div>
                     <button onClick={handleFormSubmit} type="submit" className="btn btn-primary mb-2">Search</button>
                 </form>
+                <div className="container text-center mt-5">
+                    <div className="btn-group mx-auto" role="group" aria-label="Basic example">
+                        <button type="button" className="btn btn-secondary mr-5" onClick={() => buttonClick(12)}>ACCESSORIES</button>
+                        <button type="button" className="btn btn-secondary mr-5" onClick={() => buttonClick(4)}>APPLIANCE</button>
+                        <button type="button" className="btn btn-secondary mr-5" onClick={() => buttonClick(6)}>COMPUTERS</button>
+                        <button type="button" className="btn btn-secondary mr-5" onClick={() => buttonClick(11)}>MOBILE AUDIO</button>
+                    </div>
+                </div>
             </div>
-            <SearchList list={searchItemsList}/>
+            <SearchList list={searchItemsList} />
         </div>
     )
 }
