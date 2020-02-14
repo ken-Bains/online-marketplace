@@ -15,15 +15,23 @@ const Search = () => {
 
     function itemSearch(item) {
         API.searchItem(item).then((res) => {
-            setSearchItemsList(res.data)
-            console.log(res.data);
+            const newList = res.data.filter(item => {
+                if(item.productId !== null){
+                    return item
+                }
+            })
+            setSearchItemsList(newList)
         });
     }
 
     function buttonClick(num) {
         API.searchCategories(num).then((res) => {
-            setSearchItemsList(res.data)
-            console.log(res.data);
+            const newList = res.data.filter(item => {
+                if(item.productId !== null){
+                    return item
+                }
+            })
+            setSearchItemsList(newList)
         });
     }
 

@@ -20,7 +20,7 @@ const SearchList = (props) => {
     }
     return props.list.length > 1 ? (
         <div className="container">
-            {props.list.map((item, index) => {
+            {props.list.slice(0,10).map((item, index) => {
                 return (
                     <div key={index} style={cardClass.card}>
                         <img src={item.image} style={cardClass.img} />
