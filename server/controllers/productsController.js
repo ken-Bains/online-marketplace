@@ -3,7 +3,6 @@ const axios = require("axios");
 // Defining methods for the productsController
 module.exports = {
   findAll: function(req, res) {
-    console.log("-finsall".repeat(10000))
     if (req.query.q === "") {
       req.query.q = "iphone";
     }
@@ -14,13 +13,11 @@ module.exports = {
         }*)?format=json&apiKey=${process.env.BEST_BUY_API_KEY}&pageSize=30`
       )
       .then(results => {
-        // console.log("RESULTS: ", results.data);
         res.json([...results.data.products]);
       })
       .catch(err => console.log(err));
   },
   findByClass: function(req, res) {
-    console.log("-findclass".repeat(10000))
 
     if (req.query.q === "") {
       req.query.q = "mobile";
@@ -32,13 +29,11 @@ module.exports = {
         `https://api.bestbuy.com/v1/products(departmentId=${req.query.q})?format=json&apiKey=${process.env.BEST_BUY_API_KEY}&pageSize=30`
       )
       .then(results => {
-        // console.log("RESULTS!!!: ", results.data);
         res.json([...results.data.products]);
       })
       .catch(err => console.log(err));
   },
   findById: function(req, res) {
-    console.log("-findid".repeat(10000))
     axios
       .get(
         `https://api.bestbuy.com/v1/products(productId=${
@@ -46,27 +41,23 @@ module.exports = {
         })?format=json&apiKey=${process.env.BEST_BUY_API_KEY}`
       )
       .then(results => {
-        console.log(results, "-".repeat(100));
         res.json(results.data.products[0]);
       })
       .catch(err => console.log(err));
   },
   create: function(req, res) {
-    console.log("-createl".repeat(10000))
 
     db.Product.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    console.log("-createl".repeat(10000))
 
     db.Product.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    console.log("-createl".repeat(10000))
 
     db.Product.findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
