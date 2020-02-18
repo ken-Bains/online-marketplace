@@ -12,3 +12,18 @@ code {
     monospace;
 }
 
+.itemLink {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+
+}
+
+.itemLink:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.table td {
+  vertical-align: inherit;
+}

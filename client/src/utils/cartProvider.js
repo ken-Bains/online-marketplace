@@ -1,27 +1,34 @@
 import React, { createContext, useReducer } from "react";
 
-export const CartProvider = createContext();
+export const CartContext = createContext();
 
 const cartReducer = (state, action) => {
     switch (action.type) {
         case "ADD_ITEM":
-            return
+            return [...state, {
+                name: action.item.name,
+                shortDescription: action.item.shortDescription,
+                image: action.item.image,
+                salePrice: action.item.salePrice,
+                totalPrice: action.item.totalPrice,
+                id: action.item.id,
+                quantity: action.item.quantity
+            }]
         case "DELETE_ITEM":
-            return
+            return state.filter(item => item.name !== action.name)
         case "EDIT_ITEM":
-            return
+            return 
         default:
             return state
     }
 }
 const CartContextProvider = (props) => {
-    const [cart, dispatch] = useReducer(cartReducer, [], () => {
-        //database call to set default value
-    })
+    const [cart, dispatch] = useReducer(cartReducer, []);
+
     return (
-        <CartProvider.Provider>
+        <CartContext.Provider value={{ cart, dispatch }}>
             {props.children}
-        </CartProvider.Provider>
+        </CartContext.Provider>
     )
 }
 
