@@ -17,7 +17,15 @@ const cartReducer = (state, action) => {
         case "DELETE_ITEM":
             return state.filter(item => item.name !== action.name)
         case "EDIT_ITEM":
-            return 
+            return state.map(current => {
+                if(current.id === action.item.id) {
+                    current["quantity"] = action.item.quantity;
+                    current["totalPrice"] = action.item.totalPrice;
+                    return current
+                } else {
+                    return current
+                }
+            });
         default:
             return state
     }

@@ -18,6 +18,9 @@ export default {
     },
     findAllFromDB: function() {
         return axios.get(`http://localhost:3001/api/products/db`);
+    },
+    updateItem: function(item) {
+        return axios.put(`http://localhost:3001/api/products/${item.id}`, item);
     }
 
 }

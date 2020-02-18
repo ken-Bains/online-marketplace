@@ -89,7 +89,6 @@ const Search = () => {
             cartItem["id"] = res.data._id
             dispatch({ type: "ADD_ITEM", item: cartItem });
             setIsItemInCart({ flag: true });
-            console.log(cart)
         })
     }
 

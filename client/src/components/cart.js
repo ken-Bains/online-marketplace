@@ -33,8 +33,25 @@ const Cart = () => {
     }
 
     function quantityChange(e) {
-        console.log(e.target.value);
-        console.log(e.target);
+        const itemChanged = {
+            id: e.target.id,
+            quantity: e.target.value,
+            totalPrice: e.target.dataset.price * e.target.value
+        }
+        API.updateItem(itemChanged).then(res => {
+            const cartItem = {
+                id: res.data._id,
+                name: res.data.name,
+                shortDescription: res.data.shortDescription,
+                image: res.data.image,
+                salePrice: res.data.salePrice,
+                quantity: itemChanged.quantity,
+                totalPrice: itemChanged.totalPrice
+            }
+            // dispatch({ type: "DELETE_ITEM", name: res.data.name });
+            // dispatch({ type: "ADD_ITEM", item: cartItem });
+            dispatch({type: "EDIT_ITEM", item: cartItem});
+        })
     }
 
     useEffect(() => {
@@ -43,7 +60,7 @@ const Cart = () => {
             const newCart = cart.map(el => {
                 return el.totalPrice
             });
-            setTotal(newCart.reduce(reducer));
+            setTotal(newCart.reduce(reducer).toFixed(2));
         }
     },[total, cart]);
 
@@ -68,7 +85,7 @@ const Cart = () => {
                                     <td><img style={style.img} src={item.image} alt={item.name} /></td>
                                     <td>{item.name}</td>
                                     <td>{item.shortDescription}</td>
-                                    <td><input style={style.input} type="text" className="quantityInput" placeholder={item.quantity} onChange={quantityChange} name={item.id}/></td>
+                                    <td><input style={style.input} type="text" className="quantityInput" placeholder={item.quantity} onChange={quantityChange} id={item.id} data-price={item.salePrice}/></td>
                                     <td>${item.salePrice}</td>
                                     <td> <Button variant="danger" onClick={() => removeFromCart(item)}>x</Button></td>
                                 </tr>
