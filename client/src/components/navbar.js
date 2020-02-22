@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const SideNav = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="navbar-brand">Online Marketplace</div>
@@ -15,4 +15,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default SideNav
